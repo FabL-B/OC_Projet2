@@ -11,7 +11,7 @@ def load_data_csv(books_data_list):
     dl_path = os.path.join(project_path, "Books_Data")
     if not os.path.exists(dl_path):
         os.makedirs(dl_path)
-        
+
     for book in books_data_list:
         # csv files will have the name of the value from the key "category"
         category = book["category"]
