@@ -29,8 +29,8 @@ def get_books_info_dict():
                           "universal_product_code": extract.get_upc(book_soup),
                           "title": extract.get_title(book_soup),
                           "price_including_tax": extract.get_price_incl_tax(book_soup),
-                          "price_excludind_tax": extract.get_price_excl_tax(book_soup),
-                          "number_avaible": extract.get_number_avaiable(book_soup),
+                          "price_excluding_tax": extract.get_price_excl_tax(book_soup),
+                          "number_available": extract.get_number_available(book_soup),
                           "product_description": extract.get_product_descr(book_soup),
                           "category": extract.get_category(book_soup),
                           "review_rating": extract.get_review_rating(book_soup),
@@ -38,3 +38,15 @@ def get_books_info_dict():
                           }
         books_data_list.append(book_data_dict)
     return books_data_list
+
+
+def sort_books_by_category(books_data_list):
+    books_by_category = {}
+    for book in books_data_list:
+        category = book["category"]
+        # check if category is already in books_by_category
+        if category not in books_by_category:
+            books_by_category[category] = []
+        # add the book to the list of its category
+        books_by_category[category].append(book)
+    return books_by_category
