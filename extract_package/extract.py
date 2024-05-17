@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-import os
-import re
+
 
 main_url = "http://books.toscrape.com/"
 home_page = requests.get(main_url)
@@ -39,7 +38,7 @@ def get_books_links(raw_category_url, category_link):
 
     bouton_next = category_soup.find("li", class_="next")
     if bouton_next:
-        category_page_next = raw_category_url + bouton_next.find("a")["href"]
+        category_page_next = raw_category_url + bouton_next.find("a")["href"] # type: ignore
         next_book_links = get_books_links(raw_category_url, category_page_next)
         book_links.extend(next_book_links)
 
@@ -71,7 +70,7 @@ def get_price_excl_tax(book_soup):
 
 
 # extract number_avaiable
-def get_number_avaiable(book_soup):
+def get_number_available(book_soup):
     number_avaiable = book_soup.find_all("td")[5].text
     return number_avaiable
 
