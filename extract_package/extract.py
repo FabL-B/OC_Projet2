@@ -33,13 +33,15 @@ def get_books_links(raw_category_url, category_link):
     h3s_category = category_soup.find_all("h3")
     for h3 in h3s_category:
         ahref_category = h3.find("a")
-        book_link = main_url + "catalogue/" + ahref_category["href"].strip("../../")
+        book_link = (
+            main_url + "catalogue/" + ahref_category["href"].strip("../../")
+        )
         book_links.append(book_link)
 
     bouton_next = category_soup.find("li", class_="next")
     if bouton_next:
-        category_page_next = raw_category_url + bouton_next.find("a")["href"] # type: ignore
-        next_book_links = get_books_links(raw_category_url, category_page_next)
+        next_page = raw_category_url + bouton_next.find("a").get("href", "")
+        next_book_links = get_books_links(raw_category_url, next_page)
         book_links.extend(next_book_links)
 
     return book_links
