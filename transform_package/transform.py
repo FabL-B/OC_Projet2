@@ -1,7 +1,7 @@
 from extract_package import extract
 from bs4 import BeautifulSoup
 import requests
-from pprint import pprint
+
 
 main_url = "http://books.toscrape.com/"
 home_page = requests.get(main_url)
@@ -25,17 +25,18 @@ def get_books_info_dict():
         book_page = requests.get(book_link)
         book_soup = BeautifulSoup(book_page.text, "html.parser")
 
-        book_data_dict = {"product_page_url": book_link,
-                          "universal_product_code": extract.get_upc(book_soup),
-                          "title": extract.get_title(book_soup),
-                          "price_including_tax": extract.get_price_incl_tax(book_soup),
-                          "price_excluding_tax": extract.get_price_excl_tax(book_soup),
-                          "number_available": extract.get_number_available(book_soup),
-                          "product_description": extract.get_product_descr(book_soup),
-                          "category": extract.get_category(book_soup),
-                          "review_rating": extract.get_review_rating(book_soup),
-                          "image_url": extract.get_image(book_soup)
-                          }
+        book_data_dict = {
+            "product_page_url": book_link,
+            "universal_product_code": extract.get_upc(book_soup),
+            "title": extract.get_title(book_soup),
+            "price_including_tax": extract.get_price_incl_tax(book_soup),
+            "price_excluding_tax": extract.get_price_excl_tax(book_soup),
+            "number_available": extract.get_number_available(book_soup),
+            "product_description": extract.get_product_descr(book_soup),
+            "category": extract.get_category(book_soup),
+            "review_rating": extract.get_review_rating(book_soup),
+            "image_url": extract.get_image(book_soup)
+        }
         books_data_list.append(book_data_dict)
     return books_data_list
 
