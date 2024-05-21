@@ -5,11 +5,10 @@ import csv
 
 # fonction pour créer un fichier csv par catégorie
 # nom du fichier = nom_category.csv
-def load_data_csv(books_by_category):
+def load_data_csv(books_by_category, download_path):
 
     # Create the folder Books_Data where all csv files will be saved
-    project_path = r"C:\Formation_Dev_Python_OC\Projet_2"
-    dl_path = os.path.join(project_path, "Books_Data")
+    dl_path = os.path.join(download_path, "Books_Data")
 
     # Create the Books_Data directory if it doesn't exist
     if not os.path.exists(dl_path):
@@ -39,11 +38,10 @@ def load_data_csv(books_by_category):
 
 # fonction pour télécharger les images de livres
 # nom d'image = titre_livre.jpg
-def load_img(books_data_list):
+def load_img(books_data_list, download_path):
 
     # create path for download folder
-    project_path = r"C:\Formation_Dev_Python_OC\Projet_2"
-    dl_path = os.path.join(project_path, "Pictures")
+    dl_path = os.path.join(download_path, "Pictures")
     if not os.path.exists(dl_path):
         os.makedirs(dl_path)
 
@@ -59,5 +57,7 @@ def load_img(books_data_list):
 
         # download the image
         file_path = os.path.join(dl_path, title + ".jpg")
+        if os.path.exists(file_path):
+            file_path = os.path.join(dl_path, title + "(1)" + ".jpg")
         with open(file_path, "wb") as f:
             f.write(response.content)
