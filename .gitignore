@@ -1,8 +1,10 @@
-# Virtual environment
+# Ignore virtual environment
 /env
 /venv
 
+# Ignore data folders
 /Books_Data
 /Pictures
 
+# Ignore cache folders
 __pycache__
