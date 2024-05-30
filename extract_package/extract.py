@@ -44,60 +44,61 @@ def get_books_links(raw_category_url, category_link):
         next_book_links = get_books_links(raw_category_url, next_page)
         book_links.extend(next_book_links)
 
+    print(f"{len(book_links)} books url found")
     return book_links
 
 
-# extraire universal_product_code_upc
+# Extract universal_product_code_upc
 def get_upc(book_soup):
     upc = book_soup.find_all("td")[0].text
     return upc
 
 
-# extraire title
+# Extract title
 def get_title(book_soup):
     book_title = book_soup.find("h1").text
     return book_title
 
 
-# extraire price_including_tax
+# Extract price_including_tax
 def get_price_incl_tax(book_soup):
     price_including_tax = book_soup.find_all("td")[3].text
     return price_including_tax
 
 
-# extract price_excluding_tax
+# Extract price_excluding_tax
 def get_price_excl_tax(book_soup):
     price_excluding_tax = book_soup.find_all("td")[2].text
     return price_excluding_tax
 
 
-# extract number_avaiable
+# Extract number_avaiable
 def get_number_available(book_soup):
     number_avaiable = book_soup.find_all("td")[5].text
     return number_avaiable
 
 
-# extraire product_description
+# Extract product_description
 def get_product_descr(book_soup):
     product_description = book_soup.find_all("p")[3].text
     return product_description
 
 
-# extract category
+# Extract category
 def get_category(book_soup):
     ul = book_soup.find("ul", class_="breadcrumb")
     category = ul.find_all("a")[2].text
     return category
 
 
-# extract review rating
+# Extract review rating
 def get_review_rating(book_soup):
     rating_class = book_soup.find("p", class_="star-rating").get("class")[1]
     review_rating = rating_class + " star"
     return review_rating
 
 
-# extract image url :
+# Extract image url :
 def get_image(book_soup):
     img = book_soup.find("img").get("src").strip("../../")
     image_link = main_url + img

@@ -8,6 +8,7 @@ home_page = requests.get(main_url)
 home_soup = BeautifulSoup(home_page.text, "html.parser")
 
 
+# Get all the books url links in a list
 def get_books_links_in_list():
     category_link_list = extract.get_categories_links(home_soup)
     book_link_list = []
@@ -17,6 +18,7 @@ def get_books_links_in_list():
     return book_link_list
 
 
+# Get all books datas from extract package in dictionnaries
 def get_books_info_dict():
     book_link_list = get_books_links_in_list()
     books_data_list = []
@@ -38,16 +40,19 @@ def get_books_info_dict():
             "image_url": extract.get_image(book_soup)
         }
         books_data_list.append(book_data_dict)
+    print("books datas in dictionnaries")
     return books_data_list
 
 
+# Sort books by category with category as a key and book list as value
 def sort_books_by_category(books_data_list):
     books_by_category = {}
     for book in books_data_list:
         category = book["category"]
-        # check if category is already in books_by_category
+        # Check if category is already in books_by_category
         if category not in books_by_category:
             books_by_category[category] = []
-        # add the book to the list of its category
+        # Add the book to the list of its category
         books_by_category[category].append(book)
+    print("books dictionnaries sorted by category")
     return books_by_category
