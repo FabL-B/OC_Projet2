@@ -10,11 +10,16 @@ home_soup = BeautifulSoup(home_page.text, "html.parser")
 
 # Get all the books url links in a list
 def get_books_links_in_list():
+    # Get a list of categories links
     category_link_list = extract.get_categories_links(home_soup)
     book_link_list = []
-    for links in category_link_list:
-        book_link = extract.get_books_links(links, links)
-        book_link_list.extend(book_link)
+
+    # Iterate with categories links to get book links from them in a list
+    for link in category_link_list:
+        book_links = extract.get_books_links(link, link)
+        book_link_list.extend(book_links)
+
+    print(f"{len(book_link_list)} book links found")
     return book_link_list
 
 
@@ -40,7 +45,7 @@ def get_books_info_dict():
             "image_url": extract.get_image(book_soup)
         }
         books_data_list.append(book_data_dict)
-    print("books datas in dictionnaries")
+
     return books_data_list
 
 
@@ -54,5 +59,5 @@ def sort_books_by_category(books_data_list):
             books_by_category[category] = []
         # Add the book to the list of its category
         books_by_category[category].append(book)
-    print("books dictionnaries sorted by category")
+
     return books_by_category

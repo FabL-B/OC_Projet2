@@ -22,7 +22,7 @@ def get_categories_links(home_soup):
     return category_link_list
 
 
-# Get all books links from category_link_liste
+# Get all books links from category_link_list
 def get_books_links(raw_category_url, category_link):
     book_links = []
 
@@ -31,6 +31,8 @@ def get_books_links(raw_category_url, category_link):
     category_soup = BeautifulSoup(category_page.text, "html.parser")
 
     h3s_category = category_soup.find_all("h3")
+
+    # Find the book's URL
     for h3 in h3s_category:
         ahref_category = h3.find("a")
         book_link = (
@@ -38,17 +40,18 @@ def get_books_links(raw_category_url, category_link):
         )
         book_links.append(book_link)
 
-    bouton_next = category_soup.find("li", class_="next")
-    if bouton_next:
-        next_page = raw_category_url + bouton_next.find("a").get("href", "")
+    # Check if there is a next button
+    next_button = category_soup.find("li", class_="next")
+    if next_button:
+        next_page = raw_category_url + next_button.find("a").get("href", "")
+        # Recursively get the book links from the next page
         next_book_links = get_books_links(raw_category_url, next_page)
         book_links.extend(next_book_links)
 
-    print(f"{len(book_links)} books url found")
     return book_links
 
 
-# Extract universal_product_code_upc
+# Extract universal product code (UPC)
 def get_upc(book_soup):
     upc = book_soup.find_all("td")[0].text
     return upc
@@ -60,25 +63,25 @@ def get_title(book_soup):
     return book_title
 
 
-# Extract price_including_tax
+# Extract price including tax
 def get_price_incl_tax(book_soup):
     price_including_tax = book_soup.find_all("td")[3].text
     return price_including_tax
 
 
-# Extract price_excluding_tax
+# Extract price excluding tax
 def get_price_excl_tax(book_soup):
     price_excluding_tax = book_soup.find_all("td")[2].text
     return price_excluding_tax
 
 
-# Extract number_avaiable
+# Extract number avaiable
 def get_number_available(book_soup):
     number_avaiable = book_soup.find_all("td")[5].text
     return number_avaiable
 
 
-# Extract product_description
+# Extract product description
 def get_product_descr(book_soup):
     product_description = book_soup.find_all("p")[3].text
     return product_description
@@ -98,7 +101,7 @@ def get_review_rating(book_soup):
     return review_rating
 
 
-# Extract image url :
+# Extract image URL :
 def get_image(book_soup):
     img = book_soup.find("img").get("src").strip("../../")
     image_link = main_url + img

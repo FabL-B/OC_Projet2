@@ -3,24 +3,20 @@ import os
 import csv
 
 
-# Function to one csv file by category
-# File name = category name.csv
+# Function to write one csv file by category
+# File name = category.csv
 def load_data_csv(books_by_category, download_path):
 
-    # Create the folder Books_Data where all csv files will be saved
+    # Create path for folder where all csv files will be saved
     dl_path = os.path.join(download_path, "Books_Data")
-
-    # Create the Books_Data directory if it doesn't exist
     if not os.path.exists(dl_path):
         os.makedirs(dl_path)
 
     # Iterate over each category and its associated books
     for category, books in books_by_category.items():
-
         # Create a CSV file for each category
         file_path = os.path.join(dl_path, category + ".csv")
         with open(file_path, "w", newline="", encoding="utf-8") as csv_file:
-
             # Define the header for the CSV file
             fieldnames = [
                 "product_page_url", "universal_product_code",
@@ -34,13 +30,12 @@ def load_data_csv(books_by_category, download_path):
             # Write each book's data to the CSV file
             for book in books:
                 writer.writerow(book)
-        print(f"{file_path} created in the {dl_path} folder")
+        print(f"{category}.csv containing {len(books)} books created")
 
 
 # Function to download all images from books
 # Image name = book_title.jpg
 def load_img(books_data_list, download_path):
-
     # Create path for download folder
     dl_path = os.path.join(download_path, "Pictures")
     if not os.path.exists(dl_path):
@@ -62,4 +57,4 @@ def load_img(books_data_list, download_path):
             file_path = os.path.join(dl_path, title + "(1)" + ".jpg")
         with open(file_path, "wb") as f:
             f.write(response.content)
-    print(f"All books pictures downloaded in {dl_path} folder")
+    print(f"{len(books_data_list)} images downloaded")
