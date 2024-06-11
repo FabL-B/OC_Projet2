@@ -3,14 +3,14 @@ from bs4 import BeautifulSoup
 import requests
 
 
-main_url = "http://books.toscrape.com/"
-home_page = requests.get(main_url)
-home_soup = BeautifulSoup(home_page.text, "html.parser")
-
-
 # Get all the books url links in a list
 def get_books_links_in_list():
+    main_url = "http://books.toscrape.com/"
+    home_page = requests.get(main_url)
+    home_soup = BeautifulSoup(home_page.text, "html.parser")    
     # Get a list of categories links
+    print("Collecting book links")
+    print("...")
     category_link_list = extract.get_categories_links(home_soup)
     book_link_list = []
 
@@ -28,6 +28,8 @@ def get_books_info_dict():
     book_link_list = get_books_links_in_list()
     books_data_list = []
 
+    print("Collecting book datas")
+    print("...")
     for book_link in book_link_list:
         book_page = requests.get(book_link)
         book_soup = BeautifulSoup(book_page.text, "html.parser")
@@ -45,6 +47,7 @@ def get_books_info_dict():
             "image_url": extract.get_image(book_soup)
         }
         books_data_list.append(book_data_dict)
+    print("Books datas collected")
 
     return books_data_list
 
