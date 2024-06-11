@@ -52,6 +52,8 @@ def load_img(books_data_list, download_path):
         response = requests.get(img_url)
 
         # Download the image
+        print("Downloading book pictures")
+        print("...")
         file_path = os.path.join(dl_path, title + ".jpg")
         if os.path.exists(file_path):
             file_path = os.path.join(dl_path, title + "(1)" + ".jpg")
